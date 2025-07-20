@@ -6,27 +6,11 @@
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 12:55:10 by hisasano          #+#    #+#             */
-/*   Updated: 2025/07/20 13:52:10 by hisasano         ###   ########.fr       */
+/*   Updated: 2025/07/20 20:30:58 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int	count_list(t_node **stac)
-{
-	t_node	*head;
-	int		count;
-
-	head = *stac;
-	count = 0;
-	while (head)
-	{
-		if (count < head->index)
-			count = head->index;
-		head = head->next;
-	}
-	return (count);
-}
 
 void	sort_tree(t_node **head)
 {
@@ -38,48 +22,45 @@ void	sort_tree(t_node **head)
 	b = (*head)->next->index;
 	c = (*head)->next->next->index;
 	if (a > b && b < c && a < c)
-		ope_sa(head);
+		sa(head);
 	else if (a > b && b > c)
 	{
-		ope_sa(head);
-		ope_rra(head);
+		sa(head);
+		rra(head);
 	}
 	else if (a > b && b < c && a > c)
-		ope_ra(head);
+		ra(head);
 	else if (a < b && b > c && a < c)
 	{
-		ope_sa(head);
-		ope_ra(head);
+		sa(head);
+		ra(head);
 	}
 	else if (a < b && b > c && a > c)
-		ope_rra(head);
+		rra(head);
 }
 
-void	u_five_sort(t_node **stac_a, t_node **stac_b)
+void	under_ten_sort(t_node **a, t_node **b, int size)
 {
-	t_node	*head;
-	int		count;
-	int		i;
+	int	to_push;
+	int	i;
 
-	head = *stac_a;
-	count = 0;
+	to_push = size - 3;
 	i = 0;
-	count = count_list(stac_a);
-	while (i < count - 3)
+	while (i < to_push)
 	{
-		while (head)
+		if ((*a)->index < to_push)
 		{
-			if (i == head->index)
-				ope_pb(&head, stac_b);
-			head = head->next;
+			pb(a, b);
+			i++;
+			if (i > 1 && (*b)->index < (*b)->next->index)
+				sb(b);
 		}
-		head = *stac_a;
-		i++;
+		else
+			ra(a);
 	}
-	sort_tree(stac_a);
+	sort_tree(a);
 	while (i--)
-		ope_pa(stac_a, stac_b);
-	return ;
+		pa(a, b);
 }
 
 void	small_sort(t_node **stac_a, t_node **stac_b, int size)
@@ -88,7 +69,7 @@ void	small_sort(t_node **stac_a, t_node **stac_b, int size)
 	{
 		if ((*stac_a)->index > (*stac_a)->next->index)
 		{
-			ope_sa(stac_a);
+			sa(stac_a);
 			return ;
 		}
 		else
@@ -96,10 +77,10 @@ void	small_sort(t_node **stac_a, t_node **stac_b, int size)
 	}
 	else if (size == 3)
 		sort_tree(stac_a);
-	else if (size <= 5)
-		u_five_sort(stac_a, stac_b);
-	// else
-	//     u_ten_sort(&stac_a, &stac_b);
+	else if (size <= 10)
+		under_ten_sort(stac_a, stac_b, size);
+	else
+	    // u_ten_sort(stac_a, stac_b);
 	return ;
 }
 

@@ -13,20 +13,39 @@ static void push_swap(t_node **stac_a, t_node **stac_b, int list_size)
     return ;
 }
 
+
+/******************************************************* */
+
+void	put_node(t_node *head)
+{
+	while (head)
+	{
+		printf("val: %d index: %d\n", head->val, head->index);
+		head = head->next;
+	}
+	printf("\n");
+	return ;
+}
+/******************************************************* */
+
 int	main(int argc, char **argv)
 {
 	t_node	*stac_a;
 	t_node	*stac_b;
     int size;
 
-	if (!(argc < 3))
+	stac_a = NULL;
+	if (argc > 2)
 	{
 		stac_a = make_list(argc - 1, argv);
 		stac_b = NULL;
         size = index_list(&stac_a);
+		printf("index_test:\n");/******************** */
+		put_node(stac_a);/****************************************************************** */
         if (size <= 1)
             return (0);
         push_swap(&stac_a, &stac_b, size);
+		put_node(stac_a);
         // printf("before a:\n");
 		// put_node(stac_a);
 		// printf("before b:\n");
@@ -37,8 +56,13 @@ int	main(int argc, char **argv)
 		// printf("after b:\n");
 		// put_node(stac_b);
 	}
+
 	return (0);
 }
+
+
+// to_do
+// 
 
 // ccw main.c small_sort.c index_list.c make_list.c my_atoi.c ope_push.c ope_rev.c ope_rotate.c ope_swap.c
 

@@ -6,7 +6,7 @@
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:06:06 by hisasano          #+#    #+#             */
-/*   Updated: 2025/07/18 15:44:15 by hisasano         ###   ########.fr       */
+/*   Updated: 2025/07/20 19:12:34 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,41 +15,38 @@
 
 void	ope_swap(t_node **stac)
 {
-	int	tmp;
+	t_node	*first;
+	t_node	*second;
 
-	tmp = 0;
-	if ((*stac)->next)
-	{
-		if ((*stac)->val < (*stac)->next->val)
-		{
-			tmp = (*stac)->val;
-			(*stac)->val = (*stac)->next->val;
-			(*stac)->next->val = tmp;
-		}
-	}
-	return ;
+	if (!stac || !*stac || !(*stac)->next)
+		return ;
+	first = *stac;
+	second = first->next;
+	first->next = second->next;
+	second->next = first;
+	*stac = second;
 }
 
-void	ope_sa(t_node **stac_a)
+void	sa(t_node **stac_a)
 {
 	ope_swap(stac_a);
 	write(1, "sa\n", 3);
 	return ;
 }
 
-void	ope_sb(t_node **stac_b)
+void	sb(t_node **stac_b)
 {
 	ope_swap(stac_b);
 	write(1, "sb\n", 3);
 	return ;
 }
 
-void	ope_ss(t_node **stac_a, t_node **stac_b)
+void	ss(t_node **stac_a, t_node **stac_b)
 {
 	if ((*stac_a)->next && (*stac_b)->next)
 	{
-		ope_swap(&*stac_a);
-		ope_swap(&*stac_b);
+		ope_swap(stac_a);
+		ope_swap(stac_b);
 	}
 	write(1, "ss\n", 3);
 	return ;

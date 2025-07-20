@@ -6,7 +6,7 @@
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 01:09:57 by hisasano          #+#    #+#             */
-/*   Updated: 2025/07/18 15:51:21 by hisasano         ###   ########.fr       */
+/*   Updated: 2025/07/20 19:38:24 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,9 @@ void	ope_rev(t_node **stac)
 	prev->next = NULL;
 	tail->next = *stac;
 	*stac = tail;
-	return ;
 }
 
-void	ope_rra(t_node **stac_a)
+void	rra(t_node **stac_a)
 {
 	if (!stac_a || !*stac_a || !(*stac_a)->next)
 		return ;
@@ -42,7 +41,7 @@ void	ope_rra(t_node **stac_a)
 	return ;
 }
 
-void	ope_rrb(t_node **stac_b)
+void	rrb(t_node **stac_b)
 {
 	if (!stac_b || !*stac_b || !(*stac_b)->next)
 		return ;
@@ -51,7 +50,7 @@ void	ope_rrb(t_node **stac_b)
 	return ;
 }
 
-void	ope_rrr(t_node **stac_a, t_node **stac_b)
+void	rrr(t_node **stac_a, t_node **stac_b)
 {
 	if (!stac_a || !*stac_a || !(*stac_a)->next || !stac_b || !*stac_b
 		|| !(*stac_b)->next)

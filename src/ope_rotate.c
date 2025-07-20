@@ -6,7 +6,7 @@
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 23:53:20 by hisasano          #+#    #+#             */
-/*   Updated: 2025/07/18 15:46:12 by hisasano         ###   ########.fr       */
+/*   Updated: 2025/07/20 20:12:49 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,21 @@ void	ope_rotate(t_node **stac)
 	return ;
 }
 
-void	ope_ra(t_node **stac_a)
+void	ra(t_node **stac_a)
 {
 	ope_rotate(stac_a);
 	write(1, "ra\n", 3);
 	return ;
 }
 
-void	ope_rb(t_node **stac_b)
+void	rb(t_node **stac_b)
 {
 	ope_rotate(stac_b);
 	write(1, "rb\n", 3);
 	return ;
 }
 
-void	ope_rr(t_node **stac_a, t_node **stac_b)
+void	rr(t_node **stac_a, t_node **stac_b)
 {
 	ope_rotate(stac_a);
 	ope_rotate(stac_b);

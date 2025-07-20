@@ -6,7 +6,7 @@
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 20:59:42 by hisasano          #+#    #+#             */
-/*   Updated: 2025/07/18 15:44:42 by hisasano         ###   ########.fr       */
+/*   Updated: 2025/07/20 16:00:02 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,21 @@ void	move_top(t_node **dst, t_node **src)
 	*dst = tmp;
 }
 
-void	ope_pa(t_node **stac_a, t_node **stac_b)
+void	pa(t_node **stac_a, t_node **stac_b)
 {
 	move_top(stac_a, stac_b);
 	write(1, "pa\n", 3);
 	return ;
 }
 
-void	ope_pb(t_node **stac_a, t_node **stac_b)
+void	pb(t_node **stac_a, t_node **stac_b)
 {
 	move_top(stac_b, stac_a);
 	write(1, "pb\n", 3);
 	return ;
 }
+
+
 
 // #include <stdio.h>
 
