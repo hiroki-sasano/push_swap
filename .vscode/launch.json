@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/hirokisasano/42tokyo/cursus/push_swap/src",
+      "program": "/Users/hirokisasano/42tokyo/cursus/push_swap/src/build/Debug/outDebug"
+    }
+  ]
+}

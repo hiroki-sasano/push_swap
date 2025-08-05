@@ -6,71 +6,66 @@
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:12:21 by hisasano          #+#    #+#             */
-/*   Updated: 2025/08/03 21:08:19 by hisasano         ###   ########.fr       */
+/*   Updated: 2025/07/26 21:27:22 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "error.h"
 #include "push_swap.h"
 #include <stdlib.h>
 #include <unistd.h>
 
-static void	free_partial(t_node *head)
+t_node	*create_node(char *str)
+{
+	t_node	*node;
+
+	node = malloc(sizeof(t_node));
+	if (!node)
+		return (NULL);
+	node->val = my_atoi(str);
+	node->index = 0;
+	node->next = NULL;
+	return (node);
+}
+
+void	free_list(t_node *node)
 {
 	t_node	*tmp;
 
-	while (head)
+	while (node)
 	{
-		tmp = head->next;
-		free(head);
-		head = tmp;
+		tmp = node->next;
+		free(node);
+		node = tmp;
 	}
 }
 
-t_ps_err	create_node(const char *str, t_node **out)
+t_node	*make_list(int num, char **argv)
 {
-	int			value;
-	t_ps_err	st;
-
-	st = my_atoi(str, &value);
-	if (st != PS_OK)
-		return (st);
-	*out = malloc(sizeof(t_node));
-	if (!*out)
-		return (PS_ERR_MALLOC);
-	(*out)->val = value;
-	(*out)->index = 0;
-	(*out)->next = NULL;
-	return (PS_OK);
-}
-
-t_ps_err	make_list(int num, char **argv, t_node **a)
-{
-	t_node		*head;
-	t_node		*new_node;
-	t_node		*cur;
-	int			i;
-	t_ps_err	st;
+	t_node	*head;
+	t_node	*new_node;
+	t_node	*cur;
+	int		i;
 
 	head = NULL;
 	i = 1;
 	while (i <= num)
 	{
-		st = create_node(argv[i], &new_node);
-		if (st != PS_OK)
-		{
-			free_partial(head);
-			return (st);
-		}
+		new_node = create_node(argv[i]);
+		if (!new_node)
+			return (free_list(head), NULL);
 		if (!head)
+		{
 			head = new_node;
+			cur = head;
+		}
 		else
+		{
 			cur->next = new_node;
-		cur = new_node;
+			cur = cur->next;
+		}
 		i++;
 	}
-	*a = head;
-	return (PS_OK);
+	return (head);
 }
 
 // #include <stdio.h>

@@ -6,14 +6,15 @@
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 15:45:13 by hisasano          #+#    #+#             */
-/*   Updated: 2025/07/20 20:30:57 by hisasano         ###   ########.fr       */
+/*   Updated: 2025/07/29 15:35:33 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-#include <stdio.h> /*       *****************************************************************************************/
+# include <stdio.h>
+/*       *****************************************************************************************/
 
 typedef struct s_node
 {
@@ -55,17 +56,28 @@ void				rrb(t_node **stac_b);
 void				rrr(t_node **stac_a, t_node **stac_b);
 
 /* index_list*/
-int					found_next(t_node **head, int cur_n);
-int					index_list(t_node **head);
+int					found_next(t_node *head, int cur_n);
+void				index_list(t_node **head);
+int					list_count(t_node *head);
 
 /* small_sort*/
 void				small_sort(t_node **stac_a, t_node **stac_b, int size);
 void				under_ten_sort(t_node **stac_a, t_node **stac_b, int size);
 void				sort_tree(t_node **head);
 
-void	put_node(t_node *head); /*   test*************************************************/
+/* radix_sort*/
+void				radix_sort(t_node **stac_a, t_node **stac_b, int list_size);
+
+/* a_to_b*/
+// void				b_to_a(t_node **a, t_node **b, int dig, int size);
+void				a_to_b(t_node **a, t_node **b, int dig, int size);
+
+/*   test*************************************************/
+void				put_node(t_node *head);
 
 #endif
+
+// ccw main.c small_sort.c index_list.c make_list.c my_atoi.c ope_push.c ope_rev.c ope_rotate.c ope_swap.c radix_sort.c
 
 // sa：スタックaの先頭2つの要素を交換
 

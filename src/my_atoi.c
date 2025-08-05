@@ -6,57 +6,66 @@
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 20:32:09 by hisasano          #+#    #+#             */
-/*   Updated: 2025/07/19 20:51:44 by hisasano         ###   ########.fr       */
+/*   Updated: 2025/08/03 21:22:28 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "error.h"
 #include "push_swap.h"
 #include <limits.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-static int	a_to_int(int sign, int i, const char *str)
+static int	will_overflow(long res, int dig, int sign)
 {
-	int	dig;
-	int	res;
+	if (sign > 0)
+		return (res > (LONG_MAX - dig) / 10);
+	else
+		return (-res < (LONG_MIN + dig) / 10);
+}
 
-    res = 0;
-	while (str[i] >= '0' && str[i] <= '9')
+static t_ps_err	a_to_long(const char *s, int sign, long *out)
+{
+	int		dig;
+	long	res;
+
+	res = 0;
+	while (*s >= '0' && *s <= '9')
 	{
-		dig = str[i++] - '0';
-		if (res > (LONG_MAX - dig) / 10)
-			err_exit();
+		dig = *s++ - '0';
+		if (will_overflow(res, dig, sign))
+			return (PS_ERR_OVERFLOW);
 		res = res * 10 + dig;
 	}
-	if (str[i] != '\0')
-		err_exit();
-	res *= sign;
-	if (res < INT_MIN || res > INT_MAX)
-		err_exit();
-	return (res);
+	if (*s != '\0')
+		return (PS_ERR_BADINT);
+	*out = res * sign;
+	return (PS_OK);
 }
 
-void	err_exit(void)
+t_ps_err	my_atoi(const char *str, int *out)
 {
-	write(2, "Error\n", 6);
-	exit(EXIT_FAILURE);
-}
+	int			sign;
+	long		val;
+	t_ps_err	st;
 
-int	my_atoi(const char *str)
-{
-	int i;
-	int sign;
-
-	i = 0;
 	sign = 1;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '+' || str[i] == '-')
+	if (!str || !*str)
+		return (PS_ERR_BADINT);
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
+		str++;
+	if (*str == '+' || *str == '-')
 	{
-		if (str[i] == '-')
+		if (*str == '-')
 			sign = -1;
-		i++;
+		if (!*(++str))
+			return (PS_ERR_BADINT);
 	}
-
-	return (a_to_int(sign, i, str));
+	st = a_to_long(str, sign, &val);
+	if (st != PS_OK)
+		return (st);
+	if (val < INT_MIN || val > INT_MAX)
+		return (PS_ERR_OVERFLOW);
+	*out = (int)val;
+	return (PS_OK);
 }

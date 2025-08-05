@@ -6,20 +6,40 @@
 #    By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/09 17:02:23 by hisasano          #+#    #+#              #
-#    Updated: 2025/07/10 16:49:25 by hisasano         ###   ########.fr        #
+#    Updated: 2025/08/03 22:21:31 by hisasano         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+NAME := push_swap
+B_NAME := checker
 
-NAME := push_swap.a
+SRC  := bit_radix.c\
+		chunk.c\
+		index_list.c\
+		main.c\
+		make_list.c\
+		my_atoi.c\
+		small_sort.c\
+		clean_exit.c\
+		ope_push.c\
+		ope_rotate.c\
+		ope_rev.c\
+		ope_swap.c
 
-SRC  = ope_swap.c \
-	   ope_push.c\
-	   ope_rotate.c\
-	   ope_rev.c
+B_SRC := main_bonus.c\
+		check_stac.c\
+		make_list.c\
+		my_atoi.c\
+		clean_exit.c\
+		ope_push_b.c\
+		ope_rotate_b.c\
+		ope_rev_b.c\
+		ope_swap_b.c
 
 SRCDIR       := src
+B_SRCDIR 	 := bonus_src
 OBJDIR       := obj
+B_OBJDIR	 := obj_bonus
 INCDIR       := include
 
 CC      := cc
@@ -30,33 +50,39 @@ RM      := rm -f
 RMDIR   := rm -rf
 
 SRCS := $(addprefix $(SRCDIR)/,$(SRC))
+B_SRCS := $(addprefix $(B_SRCDIR)/,$(B_SRC))
 
-OBJS := $(addprefix $(OBJDIR)/,$(notdir $(SRCS:.c=.o))) 
+OBJS := $(addprefix $(OBJDIR)/,$(notdir $(SRCS:.c=.o)))
+B_OBJS := $(addprefix $(B_OBJDIR)/,$(notdir $(B_SRCS:.c=.o)))
 
 vpath %.c $(SRCDIR)
+vpath %.c $(B_SRCDIR)
 
 all: $(NAME)
+
+bonus: $(B_NAME)
 
 $(OBJDIR)/%.o: %.c | $(OBJDIR)
 	$(CC) $(CFLAGS) $(addprefix -I, $(INCDIR)) -c $< -o $@
 
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+$(B_OBJDIR)/%.o: %.c | $(B_OBJDIR)
+	$(CC) $(CFLAGS) $(addprefix -I, $(INCDIR)) -c $< -o $@
+
+$(OBJDIR) $(B_OBJDIR):
+	@mkdir -p $@
 
 $(NAME): $(OBJS)
-	@mkdir -p ar_tmp
-	@cd ar_tmp && $(AR)
-	@$(AR) $(ARFLAGS) $@ $(OBJS) ar_tmp/*.o
-	@$(RMDIR) ar_tmp
+	$(CC) $(CFLAGS) $^ -o $@
+
+$(B_NAME): $(B_OBJS)
+	$(CC) $(CFLAGS) $^ -o $@
 
 clean:
-	$(MAKE) -C $(LIBFTDIR) clean
-	@$(RMDIR) $(OBJDIR)
+	@$(RMDIR) $(OBJDIR) $(B_OBJDIR)
 
 fclean: clean
-	$(MAKE) -C fclean
-	$(RM) $(NAME) 
+	$(RM) $(NAME) $(B_NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re 

@@ -1,41 +1,63 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ope_push.c                                         :+:      :+:    :+:   */
+/*   ope_rev.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/17 20:59:42 by hisasano          #+#    #+#             */
-/*   Updated: 2025/07/30 18:19:49 by hisasano         ###   ########.fr       */
+/*   Created: 2025/07/18 01:09:57 by hisasano          #+#    #+#             */
+/*   Updated: 2025/07/20 19:38:24 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <unistd.h>
 
-void	move_top(t_node **dst, t_node **src)
+void	ope_rev(t_node **stac)
 {
-	t_node	*tmp;
+	t_node	*prev;
+	t_node	*tail;
 
-	if (!src || !*src)
+	if (!stac || !*stac || !(*stac)->next)
 		return ;
-	tmp = *src;
-	*src = (*src)->next;
-	tmp->next = *dst;
-	*dst = tmp;
+	prev = NULL;
+	tail = *stac;
+	while (tail->next)
+	{
+		prev = tail;
+		tail = tail->next;
+	}
+	prev->next = NULL;
+	tail->next = *stac;
+	*stac = tail;
 }
 
-void	pa(t_node **stac_a, t_node **stac_b)
+void	rra(t_node **stac_a)
 {
-	move_top(stac_a, stac_b);
-	write(1, "pa\n", 3);
+	if (!stac_a || !*stac_a || !(*stac_a)->next)
+		return ;
+	ope_rev(stac_a);
+	write(1, "rra\n", 4);
 	return ;
 }
 
-void	pb(t_node **stac_a, t_node **stac_b)
+void	rrb(t_node **stac_b)
 {
-	move_top(stac_b, stac_a);
-	write(1, "pb\n", 3);
+	if (!stac_b || !*stac_b || !(*stac_b)->next)
+		return ;
+	ope_rev(stac_b);
+	write(1, "rrb\n", 4);
+	return ;
+}
+
+void	rrr(t_node **stac_a, t_node **stac_b)
+{
+	if (!stac_a || !*stac_a || !(*stac_a)->next || !stac_b || !*stac_b
+		|| !(*stac_b)->next)
+		return ;
+	ope_rev(stac_a);
+	ope_rev(stac_b);
+	write(1, "rrr\n", 4);
 	return ;
 }
 
@@ -59,20 +81,18 @@ void	pb(t_node **stac_a, t_node **stac_b)
 // {
 // 	t_node	*stac_a;
 // 	t_node	*stac_b;
-// 	char	*tes_b[] = {"tes_b", "10", "20"};
 
 // 	if (!(argc < 3))
 // 	{
 // 		stac_a = make_list(argc - 1, argv);
-// 		stac_b = make_list(2, tes_b);
+// 		stac_b = make_list(argc - 1, argv);
 // 		printf("before a:\n");
 // 		put_node(stac_a);
 // 		printf("before b:\n");
 // 		put_node(stac_b);
-
-// 		// ope_pa(&stac_a, &stac_b);
-// 		ope_pb(&stac_a, &stac_b);
-
+// 		ope_rra(&stac_a);
+// 		ope_rrb(&stac_b);
+// 		// ope_rrr(&stac_a, &stac_b);
 // 		printf("after a:\n");
 // 		put_node(stac_a);
 // 		printf("after b:\n");
@@ -81,9 +101,10 @@ void	pb(t_node **stac_a, t_node **stac_b)
 // 	return (0);
 // }
 
-// typedef struct s_node
-// {
-// 	int             val;
-// 	struct s_node  *next;
-// }	t_node;
-// pa, pb
+// rra：スタックaを1つ下に回転（末尾が先頭へ）
+// ope_reverse
+// rrb：スタックbを1つ下に回転
+// ope_reverse
+// rrr：rraとrrbを同時に実行
+// ope_reverse
+// rra, rrb, rrr

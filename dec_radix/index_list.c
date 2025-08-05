@@ -6,7 +6,7 @@
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:32:47 by hisasano          #+#    #+#             */
-/*   Updated: 2025/08/03 21:31:23 by hisasano         ###   ########.fr       */
+/*   Updated: 2025/07/27 16:39:39 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,20 @@
 static int	is_even(int cur, int src);
 static int	found_min(t_node *head);
 int			found_next(t_node *head, int cur_n);
-int			index_list(t_node **head);
+void		index_list(t_node **head);
 int			list_count(t_node *head);
 
 static int	found_min(t_node *head)
 {
-	int		min;
+	int	min;
 
 	if (!head)
 		return (INT_MAX);
 	min = head->val;
-	while (head)
-	{
-		if (head->val < min)
-			min = head->val;
-		head = head->next;
-	}
+	for (t_node *cur = head; cur; cur = cur->next)
+		if (cur->val < min)
+			min = cur->val;
 	return (min);
-}
-
-static int	is_even(int cur, int src)
-{
-	return (cur == src);
 }
 
 int	list_count(t_node *head)
@@ -72,30 +64,42 @@ int	found_next(t_node *head, int cur_n)
 	return (next);
 }
 
-int	index_list(t_node **head)
+static int	is_even(int cur, int src)
+{
+	return (cur == src);
+}
+
+void	index_list(t_node **head)
 {
 	t_node	*cur;
 	int		index;
-	int		cur_num;
+	int		cur_no;
 	int		lim;
 
 	cur = *head;
 	index = 0;
-	cur_num = found_min(*head);
+	cur_no = found_min(*head);
 	lim = list_count(*head);
 	while (index < lim)
 	{
 		while (cur)
 		{
-			if (is_even(cur->val, cur_num))
+			if (is_even(cur->val, cur_no))
 			{
 				cur->index = index;
 				index++;
 			}
 			cur = cur->next;
 		}
-		cur_num = found_next(*head, cur_num);
+		cur_no = found_next(*head, cur_no);
 		cur = *head;
 	}
-	return (index);
+	return ;
 }
+
+// typedef struct s_node
+// {
+// 	int				val;
+// 	int				index;
+// 	struct s_node	*next;
+// }					t_node;

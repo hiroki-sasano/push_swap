@@ -6,7 +6,7 @@
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 16:32:47 by hisasano          #+#    #+#             */
-/*   Updated: 2025/08/03 21:31:23 by hisasano         ###   ########.fr       */
+/*   Updated: 2025/07/30 19:08:34 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,35 +22,25 @@ int			list_count(t_node *head);
 
 static int	found_min(t_node *head)
 {
-	int		min;
+	int	min;
 
 	if (!head)
 		return (INT_MAX);
 	min = head->val;
-	while (head)
-	{
-		if (head->val < min)
-			min = head->val;
-		head = head->next;
-	}
+	for (t_node *cur = head; cur; cur = cur->next)
+		if (cur->val < min)
+			min = cur->val;
 	return (min);
-}
-
-static int	is_even(int cur, int src)
-{
-	return (cur == src);
 }
 
 int	list_count(t_node *head)
 {
-	t_node	*cur;
 	int		count;
 
-	cur = head;
 	count = 0;
-	while (cur)
+	while (head)
 	{
-		cur = cur->next;
+		head = head->next;
 		count++;
 	}
 	return (count);
@@ -58,18 +48,21 @@ int	list_count(t_node *head)
 
 int	found_next(t_node *head, int cur_n)
 {
-	t_node	*cur;
 	int		next;
 
-	cur = head;
 	next = INT_MAX;
-	while (cur)
+	while (head)
 	{
-		if (cur->val > cur_n && cur->val < next)
-			next = cur->val;
-		cur = cur->next;
+		if (head->val > cur_n && head->val < next)
+			next =head->val;
+		head = head->next;
 	}
 	return (next);
+}
+
+static int	is_even(int cur, int src)
+{
+	return (cur == src);
 }
 
 int	index_list(t_node **head)
@@ -99,3 +92,10 @@ int	index_list(t_node **head)
 	}
 	return (index);
 }
+
+// typedef struct s_node
+// {
+// 	int				val;
+// 	int				index;
+// 	struct s_node	*next;
+// }					t_node;

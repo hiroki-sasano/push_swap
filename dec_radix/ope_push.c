@@ -1,77 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   make_list.c                                        :+:      :+:    :+:   */
+/*   ope_push.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/16 19:12:21 by hisasano          #+#    #+#             */
-/*   Updated: 2025/08/03 21:08:19 by hisasano         ###   ########.fr       */
+/*   Created: 2025/07/17 20:59:42 by hisasano          #+#    #+#             */
+/*   Updated: 2025/07/20 16:00:02 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "error.h"
 #include "push_swap.h"
-#include <stdlib.h>
 #include <unistd.h>
 
-static void	free_partial(t_node *head)
+void	move_top(t_node **dst, t_node **src)
 {
 	t_node	*tmp;
 
-	while (head)
-	{
-		tmp = head->next;
-		free(head);
-		head = tmp;
-	}
+	if (!src || !*src)
+		return ;
+	tmp = *src;
+	*src = (*src)->next;
+	tmp->next = *dst;
+	*dst = tmp;
 }
 
-t_ps_err	create_node(const char *str, t_node **out)
+void	pa(t_node **stac_a, t_node **stac_b)
 {
-	int			value;
-	t_ps_err	st;
-
-	st = my_atoi(str, &value);
-	if (st != PS_OK)
-		return (st);
-	*out = malloc(sizeof(t_node));
-	if (!*out)
-		return (PS_ERR_MALLOC);
-	(*out)->val = value;
-	(*out)->index = 0;
-	(*out)->next = NULL;
-	return (PS_OK);
+	move_top(stac_a, stac_b);
+	write(1, "pa\n", 3);
+	return ;
 }
 
-t_ps_err	make_list(int num, char **argv, t_node **a)
+void	pb(t_node **stac_a, t_node **stac_b)
 {
-	t_node		*head;
-	t_node		*new_node;
-	t_node		*cur;
-	int			i;
-	t_ps_err	st;
-
-	head = NULL;
-	i = 1;
-	while (i <= num)
-	{
-		st = create_node(argv[i], &new_node);
-		if (st != PS_OK)
-		{
-			free_partial(head);
-			return (st);
-		}
-		if (!head)
-			head = new_node;
-		else
-			cur->next = new_node;
-		cur = new_node;
-		i++;
-	}
-	*a = head;
-	return (PS_OK);
+	move_top(stac_b, stac_a);
+	write(1, "pb\n", 3);
+	return ;
 }
+
+
 
 // #include <stdio.h>
 
@@ -82,7 +50,7 @@ t_ps_err	make_list(int num, char **argv, t_node **a)
 // 	cur = head;
 // 	while (cur)
 // 	{
-// 		printf("val: %d index: %d\n", cur->val, cur->index);
+// 		printf("%d\n", cur->val);
 // 		cur = cur->next;
 // 	}
 // 	printf("\n");
@@ -99,13 +67,13 @@ t_ps_err	make_list(int num, char **argv, t_node **a)
 // 	{
 // 		stac_a = make_list(argc - 1, argv);
 // 		stac_b = make_list(2, tes_b);
-//         // index_list(&stac_a);
-//         // index_list(&stac_b);
-
-//         printf("before a:\n");
+// 		printf("before a:\n");
 // 		put_node(stac_a);
 // 		printf("before b:\n");
 // 		put_node(stac_b);
+
+// 		// ope_pa(&stac_a, &stac_b);
+// 		ope_pb(&stac_a, &stac_b);
 
 // 		printf("after a:\n");
 // 		put_node(stac_a);
@@ -114,3 +82,10 @@ t_ps_err	make_list(int num, char **argv, t_node **a)
 // 	}
 // 	return (0);
 // }
+
+// typedef struct s_node
+// {
+// 	int             val;
+// 	struct s_node  *next;
+// }	t_node;
+// pa, pb
