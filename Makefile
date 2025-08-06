@@ -6,7 +6,7 @@
 #    By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/09 17:02:23 by hisasano          #+#    #+#              #
-#    Updated: 2025/08/03 22:21:31 by hisasano         ###   ########.fr        #
+#    Updated: 2025/08/06 20:02:23 by hisasano         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRC  := bit_radix.c\
 		ope_push.c\
 		ope_rotate.c\
 		ope_rev.c\
-		ope_swap.c
+		ope_swap.c\
+		is_sorted.c
 
 B_SRC := main_bonus.c\
 		check_stac.c\

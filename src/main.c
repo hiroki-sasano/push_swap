@@ -6,7 +6,7 @@
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 18:31:10 by hisasano          #+#    #+#             */
-/*   Updated: 2025/08/03 21:20:22 by hisasano         ###   ########.fr       */
+/*   Updated: 2025/08/06 20:07:36 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	main(int argc, char **argv)
 		stac_b = NULL;
 		size = index_list(&stac_a);
 		if (size <= 1)
+			err_exit(&stac_a, &stac_b, st);
+		if (is_sorted(stac_a) == 0)
 			err_exit(&stac_a, &stac_b, st);
 		push_swap(&stac_a, &stac_b, size);
 	}

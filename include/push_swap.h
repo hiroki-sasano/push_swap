@@ -6,7 +6,7 @@
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 15:45:13 by hisasano          #+#    #+#             */
-/*   Updated: 2025/08/03 21:19:26 by hisasano         ###   ########.fr       */
+/*   Updated: 2025/08/06 20:01:50 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ void				chunk_sort(t_node **a, t_node **b, int list_size,
 
 /* radix*/
 void				bit_radix(t_node **stac_a, t_node **stac_b, int list_size);
+
+/* is_sorted*/
+int					is_sorted(t_node *a);
 
 #endif
 
