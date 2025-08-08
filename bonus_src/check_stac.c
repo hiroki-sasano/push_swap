@@ -6,7 +6,7 @@
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 00:00:10 by hisasano          #+#    #+#             */
-/*   Updated: 2025/08/03 22:14:57 by hisasano         ###   ########.fr       */
+/*   Updated: 2025/08/08 20:01:32 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	ko_exit(t_node *a, t_node *b)
 {
     free_list(a);
     free_list(b);
-	write(2, "KO\n", 3);
-	exit(EXIT_FAILURE);
+	write(1, "KO\n", 3);
+	exit(EXIT_SUCCESS);
 }
 
 int check_stac(t_node *a, t_node *b)
@@ -30,15 +30,15 @@ int check_stac(t_node *a, t_node *b)
 
     head_a = a;
     if (b)
-        ko_exit(a, b);
+        ko_exit(head_a, b);
     if (!a)
-        ko_exit(a, b);
+        ko_exit(NULL, NULL);
     prev = a->val;
     a = a->next;
     while(a)
     {
         if (prev >= a->val)
-            ko_exit(a, b);
+            ko_exit(head_a, b);
         prev = a->val;
         a = a->next;
     }

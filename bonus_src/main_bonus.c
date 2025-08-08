@@ -6,7 +6,7 @@
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 20:21:57 by hisasano          #+#    #+#             */
-/*   Updated: 2025/08/03 22:13:52 by hisasano         ###   ########.fr       */
+/*   Updated: 2025/08/07 20:40:32 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,12 @@ int	main(int argc, char **argv)
 	t_ps_err st;
 
 	stac_a = NULL;
+	stac_b = NULL;
 	if (argc > 2)
 	{
 		st = make_list(argc - 1, argv, &stac_a);
 		if (st != PS_OK)
 			err_exit(&stac_a, &stac_b, st);
-		stac_b = NULL;
 		while (fgets(buf, sizeof(buf), stdin) != NULL)
 		{
 			len = my_strlen(buf);
