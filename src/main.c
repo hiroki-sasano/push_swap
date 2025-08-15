@@ -6,7 +6,7 @@
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 18:31:10 by hisasano          #+#    #+#             */
-/*   Updated: 2025/08/07 18:24:52 by hisasano         ###   ########.fr       */
+/*   Updated: 2025/08/14 20:23:43 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int argc, char **argv)
 
 	stac_a = NULL;
 	stac_b = NULL;
-	if (argc > 2)
+	if (argc >= 2)
 	{
 		st = make_list(argc - 1, argv, &stac_a);
 		if (st != PS_OK)
@@ -52,10 +52,7 @@ int	main(int argc, char **argv)
 		if (size <= 1)
 			err_exit(&stac_a, &stac_b, st);
 		if (is_sorted(stac_a))
-		{
 			err_exit(&stac_a, &stac_b, PS_OK);
-			exit(EXIT_SUCCESS);
-		}
 		push_swap(&stac_a, &stac_b, size);
 	}
 	err_exit(&stac_a, &stac_b, PS_OK);

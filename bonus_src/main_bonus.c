@@ -6,12 +6,12 @@
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 20:21:57 by hisasano          #+#    #+#             */
-/*   Updated: 2025/08/07 20:40:32 by hisasano         ###   ########.fr       */
+/*   Updated: 2025/08/14 20:24:29 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap_bonus.h"
 #include "push_swap.h"
+#include "push_swap_bonus.h"
 #include <stdio.h>
 #include <unistd.h>
 
@@ -41,41 +41,41 @@ static size_t	my_strlen(const char *s)
 	return (len);
 }
 
-static void test_sort(char *buf, t_node **a, t_node **b)
+static void	test_sort(char *buf, t_node **a, t_node **b)
 {
-    if (my_strcmp(buf, "sa") == 0)
-        b_sa(a);
-    else if (my_strcmp(buf, "sb") == 0)
-        b_sb(b);
-    else if (my_strcmp(buf, "ss") == 0)
-        b_ss(a, b);
-    else if (my_strcmp(buf, "pa") == 0)
-        b_pa(a, b);
-    else if (my_strcmp(buf, "pb") == 0)
-        b_pb(a, b);
-    else if (my_strcmp(buf, "ra") == 0)
-        b_ra(a);
-    else if (my_strcmp(buf, "rb") == 0)
-        b_rb(b);
-    else if (my_strcmp(buf, "rr") == 0)
-        b_rr(a, b);
-    else if (my_strcmp(buf, "rra") == 0)
-        b_rra(a);
-    else if (my_strcmp(buf, "rrb") == 0)
-        b_rrb(b);
-    else if (my_strcmp(buf, "rrr") == 0)
-        b_rrr(a, b);
-    else
-        err_exit(a, b, 1);
+	if (my_strcmp(buf, "sa") == 0)
+		b_sa(a);
+	else if (my_strcmp(buf, "sb") == 0)
+		b_sb(b);
+	else if (my_strcmp(buf, "ss") == 0)
+		b_ss(a, b);
+	else if (my_strcmp(buf, "pa") == 0)
+		b_pa(a, b);
+	else if (my_strcmp(buf, "pb") == 0)
+		b_pb(a, b);
+	else if (my_strcmp(buf, "ra") == 0)
+		b_ra(a);
+	else if (my_strcmp(buf, "rb") == 0)
+		b_rb(b);
+	else if (my_strcmp(buf, "rr") == 0)
+		b_rr(a, b);
+	else if (my_strcmp(buf, "rra") == 0)
+		b_rra(a);
+	else if (my_strcmp(buf, "rrb") == 0)
+		b_rrb(b);
+	else if (my_strcmp(buf, "rrr") == 0)
+		b_rrr(a, b);
+	else
+		err_exit(a, b, 1);
 }
 
 int	main(int argc, char **argv)
 {
-	t_node	*stac_a;
-	t_node	*stac_b;
-	char	buf[16];
-	size_t	len;
-	t_ps_err st;
+	t_node		*stac_a;
+	t_node		*stac_b;
+	char		buf[16];
+	size_t		len;
+	t_ps_err	st;
 
 	stac_a = NULL;
 	stac_b = NULL;
@@ -89,7 +89,7 @@ int	main(int argc, char **argv)
 			len = my_strlen(buf);
 			if (len > 0 && buf[len - 1] == '\n')
 				buf[len - 1] = '\0';
-            test_sort(buf, &stac_a, &stac_b);
+			test_sort(buf, &stac_a, &stac_b);
 		}
 		return (check_stac(stac_a, stac_b));
 	}

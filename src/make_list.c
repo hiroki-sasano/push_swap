@@ -6,7 +6,7 @@
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 19:12:21 by hisasano          #+#    #+#             */
-/*   Updated: 2025/08/03 21:08:19 by hisasano         ###   ########.fr       */
+/*   Updated: 2025/08/14 20:14:33 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,18 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static void	free_partial(t_node *head)
+static t_ps_err	has_value(const t_node *head, int value, t_ps_err err)
+{
+	while (head)
+	{
+		if (head->val == value)
+			return (err);
+		head = head->next;
+	}
+	return (PS_OK);
+}
+
+static t_ps_err	free_partial(t_node *head, t_ps_err err)
 {
 	t_node	*tmp;
 
@@ -25,9 +36,10 @@ static void	free_partial(t_node *head)
 		free(head);
 		head = tmp;
 	}
+	return (err);
 }
 
-t_ps_err	create_node(const char *str, t_node **out)
+static t_ps_err	create_node(const char *str, t_node **out)
 {
 	int			value;
 	t_ps_err	st;
@@ -44,29 +56,40 @@ t_ps_err	create_node(const char *str, t_node **out)
 	return (PS_OK);
 }
 
+static t_ps_err	app_node(t_node **head, t_node **tail, t_node *node)
+{
+	if (has_value(*head, node->val, PS_ERR_DUP) != PS_OK)
+	{
+		free(node);
+		return (PS_ERR_DUP);
+	}
+	if (!*head)
+		*head = node;
+	else
+		(*tail)->next = node;
+	*tail = node;
+	return (PS_OK);
+}
+
 t_ps_err	make_list(int num, char **argv, t_node **a)
 {
 	t_node		*head;
-	t_node		*new_node;
-	t_node		*cur;
-	int			i;
+	t_node		*tail;
+	t_node		*node;
 	t_ps_err	st;
+	int			i;
 
 	head = NULL;
+	tail = NULL;
 	i = 1;
 	while (i <= num)
 	{
-		st = create_node(argv[i], &new_node);
+		st = create_node(argv[i], &node);
 		if (st != PS_OK)
-		{
-			free_partial(head);
-			return (st);
-		}
-		if (!head)
-			head = new_node;
-		else
-			cur->next = new_node;
-		cur = new_node;
+			return (free_partial(head, st));
+		st = app_node(&head, &tail, node);
+		if (st != PS_OK)
+			return (free_partial(head, st));
 		i++;
 	}
 	*a = head;

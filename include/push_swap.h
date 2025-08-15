@@ -6,7 +6,7 @@
 /*   By: hisasano <hisasano@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 15:45:13 by hisasano          #+#    #+#             */
-/*   Updated: 2025/08/06 20:01:50 by hisasano         ###   ########.fr       */
+/*   Updated: 2025/08/14 20:17:46 by hisasano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ typedef struct s_node
 
 /* make_list.c*/
 t_ps_err			my_atoi(const char *str, int *out);
-t_ps_err			create_node(const char *str, t_node **out);
 t_ps_err			make_list(int argc, char **argv, t_node **a);
 void				free_list(t_node *head);
 void				err_exit(t_node **a, t_node **b, t_ps_err st);
